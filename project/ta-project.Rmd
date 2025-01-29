@@ -16,7 +16,20 @@ set.seed(10101)
 
 ##### paths -----
 data_path = "~/Library/CloudStorage/Dropbox/McGill/teaching/2024-2025/winter/talent-analytics/data/" 
-app_data_raw <- read_feather(paste0(data_path,"app_data_starter_coded.feather")) 
+app_data_raw <- read_feather(paste0(data_path,"app_data_starter.feather")) |> 
+  select(
+    application_number,
+    examiner_id,
+    au = examiner_art_unit,
+    app_last_action_date = appl_status_date,
+    app_disposal_type = disposal_type,
+    gender = gender.x,
+    race = race.x,
+    examiner_earliest_date = earliest_date.x
+  )
+
+write_feather(app_data_raw, paste0(data_path,"app_data_starter_coded.feather"))
+
 ```
 
 ## Project overview

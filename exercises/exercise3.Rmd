@@ -1,0 +1,92 @@
+---
+title: "Exercise 3"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+## clear memory
+rm(list = ls())
+gc()
+
+## load the necessary packages
+library(tidyverse)
+library(skimr)
+library(lubridate)
+library(arrow)
+set.seed(10101)
+
+##### paths -----
+data_path = "~/Library/CloudStorage/Dropbox/McGill/teaching/2024-2025/winter/talent-analytics/data/" 
+```
+
+## Load the data
+
+Let's start by loading the project data file and looking at its structure.
+
+```{r}
+## load the data
+app_data_raw <- read_feather(paste0(data_path,"app_data_starter_coded.feather")) 
+
+## show the top 10 rows
+app_data_raw
+```
+
+## Prepare the monthly aggregated panel
+
+We will now aggregate the data on the monthly basis. Specifically, we need to follow these steps:
+
+### First, examiner-level features
+
+Start with creating a copy of the raw data to calculate these:
+
+1.  Extract `year` and `month` from the `app_last_action` field
+2.  Group data by `year`, `month` and `examiner_id`
+3.  Summarize by the groups, to create the panel data, which will have these variables:
+    -   total number of applications processed
+    -   examiner tenure in days since hire date (approximated with `examiner_earliest_date`)
+    -   examiner's art unit number in that month
+    -   total number of applications with patents issued (`app_disposal_type == "ISS"`)
+    -   total number of applications that were abandoned after a rejection (`app_disposal_type == "ABN"`)
+    -   total number of applications with final decision still pending (`app_disposal_type == "PEND"`)
+    -   also keep gender and race variables, though they don't change within examiner
+
+```{r}
+## your code here
+```
+
+### Calculate art-unit-level features
+
+Create another copy of the raw data, but aggregate it on a different level
+
+1.  Extract year and month fields again,
+2.  Group data by year, month, and art unit number
+3.  Summarize to create these variables
+    -   number of examiners in that art unit in that month
+    -   number of minority-race (non-white) examiners
+    -   number of women
+    -   number of applications processed in that month
+
+```{r}
+## your code here
+```
+
+### Join the art unit characteristics to the examiner monthly data
+
+Join the second generated dataset to the first one using `left_join()` command in `dplyr` package, and calculate additional variables:
+
+-   extract TC number from `au` into a `tc` variable. Remember that it's indicated by the first two digits, so an art unit 1652 is located in Technology Center 1600
+
+-   extract workgroup (WG) number from art unit, using the first 3 digits of the art unit. So, an art unit 1652 is part of the workgroup `wg` 1650
+
+```{r}
+## your code here
+```
+
+## Estimate, using linear regressions, what factors predict productivity
+
+Using the resulting monthly dataset, estimate what factors in the data are associated with higher/lower number of applications processed by any given examiner in any given month.
+
+```{r}
+## your code here
+```
