@@ -21,6 +21,7 @@ app_data_raw <- read_feather(paste0(data_path,"app_data_starter.feather")) |>
     application_number,
     examiner_id,
     au = examiner_art_unit,
+    app_filing_date = filing_date,
     app_last_action_date = appl_status_date,
     app_disposal_type = disposal_type,
     gender = gender.x,
@@ -28,7 +29,7 @@ app_data_raw <- read_feather(paste0(data_path,"app_data_starter.feather")) |>
     examiner_earliest_date = earliest_date.x
   )
 
-write_feather(app_data_raw, paste0(data_path,"app_data_starter_coded.feather"))
+write_feather(app_data_raw, paste0(data_path,"app_data_starter_coded_202502.feather"))
 
 ```
 
